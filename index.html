@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Bài tập Hàm số bậc nhất</title>
+  <title>Bài tập Hàm số bậc nhất - Mobile Optimized</title>
   
   <!-- KaTeX CSS & JS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
@@ -15,54 +15,55 @@
   <style>
     :root {
       --primary: #2563eb;
-      --bg-color: #f8fafc;
+      --bg-color: #f1f5f9;
       --card-bg: #ffffff;
       --border-color: #cbd5e1;
     }
 
     * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-    body { background-color: var(--bg-color); margin: 0; padding: 12px; color: #1e293b; }
+    body { background-color: var(--bg-color); margin: 0; padding: 10px; color: #1e293b; }
 
     .main-container {
-      max-width: 750px;
+      max-width: 600px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 12px;
     }
 
     .card {
       background: var(--card-bg);
       border-radius: 16px;
-      padding: 16px;
+      padding: 14px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
       border: 1px solid var(--border-color);
     }
 
     .user-info {
       background: #eff6ff;
-      padding: 10px 14px;
+      padding: 10px 12px;
       border-radius: 10px;
       display: flex;
-      gap: 10px;
+      gap: 8px;
       align-items: center;
       border: 1px solid #bfdbfe;
     }
 
     .user-info input {
       flex: 1;
-      padding: 8px 12px;
+      padding: 8px 10px;
       border: 1px solid #cbd5e1;
-      border-radius: 6px;
+      border-radius: 8px;
       outline: none;
-      font-size: 14px;
+      font-size: 15px;
     }
 
     .guide-text {
       font-size: 14px;
-      font-weight: bold;
+      font-weight: 700;
       color: #1e40af;
       margin-bottom: 12px;
+      line-height: 1.4;
     }
 
     .exercise-list {
@@ -74,11 +75,12 @@
     .math-row {
       background: #fff;
       border: 2px solid #60a5fa;
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 12px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
+      transition: all 0.2s;
     }
 
     .row-header {
@@ -86,28 +88,31 @@
       align-items: center;
       justify-content: space-between;
       gap: 8px;
+      flex-wrap: wrap; /* Tự động xuống dòng gọn gàng trên màn hình hẹp */
     }
 
     .math-expr {
-      font-size: 17px;
+      font-size: 18px;
       font-weight: bold;
     }
 
     .btn-group {
       display: flex;
       gap: 6px;
+      flex-shrink: 0;
     }
 
     .btn-opt {
       padding: 6px 12px;
       border-radius: 20px;
       border: 1px solid #cbd5e1;
-      background: #f1f5f9;
+      background: #f8fafc;
       color: #475569;
       font-size: 13px;
-      font-weight: bold;
+      font-weight: 700;
       cursor: pointer;
       transition: all 0.2s;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .btn-opt.selected-yes {
@@ -122,37 +127,43 @@
       border-color: #dc2626;
     }
 
-    /* Khung nhập a, b và điều kiện */
+    /* Khung nhập a, b và điều kiện m ≠ 1 */
     .sub-inputs {
       background: #f8fafc;
-      border-top: 1px dashed #cbd5e1;
-      padding-top: 8px;
-      margin-top: 4px;
+      border: 1px dashed #93c5fd;
+      border-radius: 10px;
+      padding: 10px;
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 10px 14px;
       align-items: center;
-      font-size: 14px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #1e3a8a;
+    }
+
+    .sub-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
 
     .sub-inputs input {
-      width: 65px;
-      padding: 5px 8px;
+      width: 55px;
+      height: 36px;
+      padding: 0 4px;
       text-align: center;
-      border: 1px solid #94a3b8;
-      border-radius: 6px;
+      border: 1.5px solid #94a3b8;
+      border-radius: 8px;
       outline: none;
       font-weight: bold;
+      font-size: 16px;
+      background: #fff;
     }
 
-    .sym-btn {
-      background: #e2e8f0;
-      border: 1px solid #94a3b8;
-      border-radius: 4px;
-      padding: 2px 6px;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 13px;
+    .sub-inputs input:focus {
+      border-color: #2563eb;
+      background: #eff6ff;
     }
 
     .btn-submit {
@@ -160,15 +171,16 @@
       color: white;
       border: none;
       width: 100%;
-      padding: 12px;
-      border-radius: 10px;
+      padding: 14px;
+      border-radius: 12px;
       font-size: 16px;
-      font-weight: bold;
+      font-weight: 800;
       cursor: pointer;
-      margin-top: 15px;
+      margin-top: 10px;
+      box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
     }
 
-    .btn-submit:hover { background: #1d4ed8; }
+    .btn-submit:active { transform: scale(0.98); }
 
     /* Bảng Xếp Hạng */
     table.board-table {
@@ -182,6 +194,12 @@
 
     table.board-table th, table.board-table td { border: 1px solid #e2e8f0; padding: 8px; text-align: center; }
     table.board-table th { background: #eff6ff; color: #1e40af; }
+
+    @media (max-width: 400px) {
+      .row-header { flex-direction: column; align-items: flex-start; }
+      .btn-group { width: 100%; justify-content: space-between; }
+      .btn-opt { flex: 1; text-align: center; }
+    }
   </style>
 </head>
 <body>
@@ -212,8 +230,8 @@
           </div>
         </div>
         <div class="sub-inputs" style="display:none;">
-          <span>Hệ số <span class="math">a =</span> <input type="text" class="inp-a"></span>
-          <span>Hệ số <span class="math">b =</span> <input type="text" class="inp-b"></span>
+          <div class="sub-item">Hệ số <span class="math">a =</span> <input type="text" class="inp-a"></div>
+          <div class="sub-item">Hệ số <span class="math">b =</span> <input type="text" class="inp-b"></div>
         </div>
       </div>
 
@@ -227,8 +245,8 @@
           </div>
         </div>
         <div class="sub-inputs" style="display:none;">
-          <span>Hệ số <span class="math">a =</span> <input type="text" class="inp-a"></span>
-          <span>Hệ số <span class="math">b =</span> <input type="text" class="inp-b"></span>
+          <div class="sub-item">Hệ số <span class="math">a =</span> <input type="text" class="inp-a"></div>
+          <div class="sub-item">Hệ số <span class="math">b =</span> <input type="text" class="inp-b"></div>
         </div>
       </div>
 
@@ -265,8 +283,8 @@
         </div>
       </div>
 
-      <!-- Câu f - Đã sửa lỗi hiển thị m ≠ 1 -->
-      <div class="math-row" data-id="f" data-is-linear="true" data-cond="m!=1|m\neq1|≠1" data-a="m-1" data-b="3">
+      <!-- Câu f - Đã tối ưu m ≠ 1 -->
+      <div class="math-row" data-id="f" data-is-linear="true" data-a="m-1" data-b="3">
         <div class="row-header">
           <div class="math-expr">f) <span class="math">y = (m - 1)x + 3</span></div>
           <div class="btn-group">
@@ -275,13 +293,13 @@
           </div>
         </div>
         <div class="sub-inputs" style="display:none;">
-          <!-- Khung hiển thị m ≠ 1 chuẩn KaTeX -->
-          <span>Điều kiện: <span class="math">m \neq</span> 
-            <input type="text" class="inp-cond" placeholder="1" style="width:45px;">
-            <button type="button" class="sym-btn" onclick="insertSymbol(this, '≠')">≠</button>
-          </span>
-          <span>Hệ số <span class="math">a =</span> <input type="text" class="inp-a"></span>
-          <span>Hệ số <span class="math">b =</span> <input type="text" class="inp-b"></span>
+          <!-- Điều kiện m ≠ [ 1 ] hiển thị chuẩn đẹp -->
+          <div class="sub-item">
+            Điều kiện: <span class="math">m \neq</span> 
+            <input type="text" class="inp-cond" placeholder="?" inputmode="numeric">
+          </div>
+          <div class="sub-item">Hệ số <span class="math">a =</span> <input type="text" class="inp-a"></div>
+          <div class="sub-item">Hệ số <span class="math">b =</span> <input type="text" class="inp-b"></div>
         </div>
       </div>
 
@@ -343,12 +361,6 @@
     }
   }
 
-  function insertSymbol(btn, sym) {
-    let inp = btn.previousElementSibling;
-    inp.value += sym;
-    inp.focus();
-  }
-
   async function checkAnswer() {
     let name = document.getElementById('studentName').value.trim();
     if (!name) {
@@ -369,17 +381,15 @@
       if (isLinear && userChoice === 'yes') {
         let subCorrect = true;
         
-        // Kiểm tra a, b
         let inpA = row.querySelector('.inp-a');
         let inpB = row.querySelector('.inp-b');
         if (inpA && inpA.value.trim().replace(/\s+/g,'') !== row.getAttribute('data-a')) subCorrect = false;
         if (inpB && inpB.value.trim().replace(/\s+/g,'') !== row.getAttribute('data-b')) subCorrect = false;
 
-        // Kiểm tra điều kiện m ≠ 1 (nếu có)
+        // Cho câu f: Học sinh chỉ cần nhập 1 (hoặc ≠1)
         let inpCond = row.querySelector('.inp-cond');
         if (inpCond) {
           let val = inpCond.value.trim().replace(/\s+/g,'');
-          // Chấp nhận gõ '1', '≠1', '!=1'
           if (val !== '1' && val !== '≠1' && val !== '!=1') subCorrect = false;
         }
 
