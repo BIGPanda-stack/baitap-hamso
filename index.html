@@ -3,28 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Bài tập Hàm số bậc nhất - Mobile Optimized</title>
+  <title>Bài tập Hàm số bậc nhất - Mobile</title>
   
-  <!-- KaTeX CSS & JS -->
+  <!-- KaTeX CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
 
-  <!-- Supabase JS -->
+  <!-- Supabase CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     :root {
       --primary: #2563eb;
-      --bg-color: #f1f5f9;
+      --bg-color: #f8fafc;
       --card-bg: #ffffff;
       --border-color: #cbd5e1;
     }
 
     * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-    body { background-color: var(--bg-color); margin: 0; padding: 10px; color: #1e293b; }
+    body { background-color: var(--bg-color); margin: 0; padding: 10px; color: #0f172a; }
 
     .main-container {
-      max-width: 600px;
+      max-width: 500px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -42,7 +42,7 @@
     .user-info {
       background: #eff6ff;
       padding: 10px 12px;
-      border-radius: 10px;
+      border-radius: 12px;
       display: flex;
       gap: 8px;
       align-items: center;
@@ -51,8 +51,8 @@
 
     .user-info input {
       flex: 1;
-      padding: 8px 10px;
-      border: 1px solid #cbd5e1;
+      padding: 8px 12px;
+      border: 1px solid #94a3b8;
       border-radius: 8px;
       outline: none;
       font-size: 15px;
@@ -69,7 +69,7 @@
     .exercise-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
     .math-row {
@@ -80,7 +80,6 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-      transition: all 0.2s;
     }
 
     .row-header {
@@ -88,30 +87,27 @@
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      flex-wrap: wrap; /* Tự động xuống dòng gọn gàng trên màn hình hẹp */
     }
 
     .math-expr {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: bold;
     }
 
     .btn-group {
       display: flex;
       gap: 6px;
-      flex-shrink: 0;
     }
 
     .btn-opt {
-      padding: 6px 12px;
+      padding: 8px 12px;
       border-radius: 20px;
       border: 1px solid #cbd5e1;
-      background: #f8fafc;
+      background: #f1f5f9;
       color: #475569;
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.2s;
       -webkit-tap-highlight-color: transparent;
     }
 
@@ -127,7 +123,7 @@
       border-color: #dc2626;
     }
 
-    /* Khung nhập a, b và điều kiện m ≠ 1 */
+    /* Sub-inputs thiết kế chuẩn đẹp cho điện thoại */
     .sub-inputs {
       background: #f8fafc;
       border: 1px dashed #93c5fd;
@@ -135,7 +131,7 @@
       padding: 10px;
       display: flex;
       flex-wrap: wrap;
-      gap: 10px 14px;
+      gap: 8px 12px;
       align-items: center;
       font-size: 15px;
       font-weight: 600;
@@ -149,9 +145,9 @@
     }
 
     .sub-inputs input {
-      width: 55px;
+      width: 50px;
       height: 36px;
-      padding: 0 4px;
+      padding: 0;
       text-align: center;
       border: 1.5px solid #94a3b8;
       border-radius: 8px;
@@ -180,8 +176,6 @@
       box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
     }
 
-    .btn-submit:active { transform: scale(0.98); }
-
     /* Bảng Xếp Hạng */
     table.board-table {
       width: 100%;
@@ -195,7 +189,7 @@
     table.board-table th, table.board-table td { border: 1px solid #e2e8f0; padding: 8px; text-align: center; }
     table.board-table th { background: #eff6ff; color: #1e40af; }
 
-    @media (max-width: 400px) {
+    @media (max-width: 380px) {
       .row-header { flex-direction: column; align-items: flex-start; }
       .btn-group { width: 100%; justify-content: space-between; }
       .btn-opt { flex: 1; text-align: center; }
@@ -209,14 +203,14 @@
   <div class="card">
     <div class="user-info">
       <label for="studentName"><b>Tên Nhóm / HS:</b></label>
-      <input type="text" id="studentName" placeholder="Nhập tên của bạn...">
+      <input type="text" id="studentName" placeholder="Nhập tên học sinh...">
     </div>
   </div>
 
-  <!-- NỘI DUNG BÀI TẬP -->
+  <!-- BÀI TẬP -->
   <div class="card">
     <div class="guide-text">
-      📌 Chọn <b>[Hàm số bậc nhất]</b> (và xác định $a, b$), chọn <b>[Không phải]</b> nếu không phải:
+      📌 Chọn <b>[Hàm số bậc nhất]</b> (và điền tham số), hoặc chọn <b>[Không phải]</b>:
     </div>
 
     <div class="exercise-list">
@@ -283,7 +277,7 @@
         </div>
       </div>
 
-      <!-- Câu f - Đã tối ưu m ≠ 1 -->
+      <!-- Câu f - Đã chuẩn hoá điều kiện m ≠ 1 -->
       <div class="math-row" data-id="f" data-is-linear="true" data-a="m-1" data-b="3">
         <div class="row-header">
           <div class="math-expr">f) <span class="math">y = (m - 1)x + 3</span></div>
@@ -293,7 +287,7 @@
           </div>
         </div>
         <div class="sub-inputs" style="display:none;">
-          <!-- Điều kiện m ≠ [ 1 ] hiển thị chuẩn đẹp -->
+          <!-- Hiển thị chuẩn Toán học: Điều kiện m ≠ [ 1 ] -->
           <div class="sub-item">
             Điều kiện: <span class="math">m \neq</span> 
             <input type="text" class="inp-cond" placeholder="?" inputmode="numeric">
@@ -322,7 +316,7 @@
         </tr>
       </thead>
       <tbody id="boardBody">
-        <tr><td colspan="4">Đang tải...</td></tr>
+        <tr><td colspan="4">Đang tải dữ liệu...</td></tr>
       </tbody>
     </table>
   </div>
@@ -375,7 +369,6 @@
     rows.forEach(row => {
       let isLinear = row.getAttribute('data-is-linear') === 'true';
       let userChoice = row.getAttribute('data-user-choice');
-
       let isCorrect = false;
 
       if (isLinear && userChoice === 'yes') {
@@ -386,11 +379,11 @@
         if (inpA && inpA.value.trim().replace(/\s+/g,'') !== row.getAttribute('data-a')) subCorrect = false;
         if (inpB && inpB.value.trim().replace(/\s+/g,'') !== row.getAttribute('data-b')) subCorrect = false;
 
-        // Cho câu f: Học sinh chỉ cần nhập 1 (hoặc ≠1)
+        // Câu f: Điều kiện m ≠ [ 1 ] -> Học sinh chỉ nhập số 1 là đúng
         let inpCond = row.querySelector('.inp-cond');
         if (inpCond) {
           let val = inpCond.value.trim().replace(/\s+/g,'');
-          if (val !== '1' && val !== '≠1' && val !== '!=1') subCorrect = false;
+          if (val !== '1') subCorrect = false;
         }
 
         if (subCorrect) isCorrect = true;
@@ -440,7 +433,7 @@
     tbody.innerHTML = '';
 
     if (error || !data || data.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="4">Chưa có ai nộp bài.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="4">Chưa có dữ liệu.</td></tr>';
       return;
     }
 
