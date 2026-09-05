@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Bài tập Hàm số bậc nhất - Mobile</title>
+  <title>Bài tập Hàm số bậc nhất</title>
   
   <!-- KaTeX CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
@@ -74,12 +74,13 @@
 
     .math-row {
       background: #fff;
-      border: 2px solid #60a5fa;
+      border: 2px solid #cbd5e1;
       border-radius: 14px;
       padding: 12px;
       display: flex;
       flex-direction: column;
       gap: 10px;
+      transition: border-color 0.3s;
     }
 
     .row-header {
@@ -123,7 +124,7 @@
       border-color: #dc2626;
     }
 
-    /* Sub-inputs thiết kế chuẩn đẹp cho điện thoại */
+    /* Khung nhập phụ */
     .sub-inputs {
       background: #f8fafc;
       border: 1px dashed #93c5fd;
@@ -145,9 +146,8 @@
     }
 
     .sub-inputs input {
-      width: 50px;
       height: 36px;
-      padding: 0;
+      padding: 0 8px;
       text-align: center;
       border: 1.5px solid #94a3b8;
       border-radius: 8px;
@@ -156,6 +156,10 @@
       font-size: 16px;
       background: #fff;
     }
+
+    .inp-cond { width: 50px; }
+    .inp-a { width: 70px; }
+    .inp-b { width: 50px; }
 
     .sub-inputs input:focus {
       border-color: #2563eb;
@@ -176,7 +180,6 @@
       box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
     }
 
-    /* Bảng Xếp Hạng */
     table.board-table {
       width: 100%;
       border-collapse: collapse;
@@ -203,7 +206,7 @@
   <div class="card">
     <div class="user-info">
       <label for="studentName"><b>Tên Nhóm / HS:</b></label>
-      <input type="text" id="studentName" placeholder="Nhập tên học sinh...">
+      <input type="text" id="studentName" placeholder="Nhập tên của bạn...">
     </div>
   </div>
 
@@ -277,7 +280,7 @@
         </div>
       </div>
 
-      <!-- Câu f - Đã chuẩn hoá điều kiện m ≠ 1 -->
+      <!-- Câu f - Đã sửa lỗi hiển thị điều kiện m ≠ 1 và nhận cả chữ M hoa -->
       <div class="math-row" data-id="f" data-is-linear="true" data-a="m-1" data-b="3">
         <div class="row-header">
           <div class="math-expr">f) <span class="math">y = (m - 1)x + 3</span></div>
@@ -355,6 +358,12 @@
     }
   }
 
+  // Hàm làm sạch chuỗi nhập vào: Xóa khoảng trắng và đưa về chữ thường
+  function cleanVal(str) {
+    if (!str) return '';
+    return str.toString().toLowerCase().replace(/\s+/g, '');
+  }
+
   async function checkAnswer() {
     let name = document.getElementById('studentName').value.trim();
     if (!name) {
@@ -376,13 +385,21 @@
         
         let inpA = row.querySelector('.inp-a');
         let inpB = row.querySelector('.inp-b');
-        if (inpA && inpA.value.trim().replace(/\s+/g,'') !== row.getAttribute('data-a')) subCorrect = false;
-        if (inpB && inpB.value.trim().replace(/\s+/g,'') !== row.getAttribute('data-b')) subCorrect = false;
 
-        // Câu f: Điều kiện m ≠ [ 1 ] -> Học sinh chỉ nhập số 1 là đúng
+        // Kiểm tra hệ số a (Nhận cả 'm-1', 'M-1', 'm - 1', 'M - 1')
+        if (inpA && cleanVal(inpA.value) !== cleanVal(row.getAttribute('data-a'))) {
+          subCorrect = false;
+        }
+
+        // Kiểm tra hệ số b
+        if (inpB && cleanVal(inpB.value) !== cleanVal(row.getAttribute('data-b'))) {
+          subCorrect = false;
+        }
+
+        // Kiểm tra điều kiện m ≠ 1 (Ô trống chỉ cần nhập số 1)
         let inpCond = row.querySelector('.inp-cond');
         if (inpCond) {
-          let val = inpCond.value.trim().replace(/\s+/g,'');
+          let val = cleanVal(inpCond.value);
           if (val !== '1') subCorrect = false;
         }
 
@@ -393,9 +410,9 @@
 
       if (isCorrect) {
         correctCount++;
-        row.style.borderColor = '#16a34a';
+        row.style.borderColor = '#16a34a'; // Xanh lá nếu đúng
       } else {
-        row.style.borderColor = '#dc2626';
+        row.style.borderColor = '#dc2626'; // Đỏ nếu sai
       }
     });
 
@@ -412,13 +429,12 @@
     resBox.innerHTML = `🎉 <b>${name}</b> hoàn thành: <b>${correctCount}/${totalQuestions}</b> câu đúng!`;
 
     document.getElementById('submitBtn').disabled = true;
-    document.getElementById('submitBtn').innerText = "ĐANG LƯU KẾT QUẢ...";
+    document.getElementById('submitBtn').innerText = "ĐÃ NỘP BÀI!";
 
     await _supabase
       .from('leaderboard')
       .insert([{ name: name, score: score, time: timeStr, pts: correctCount }]);
 
-    document.getElementById('submitBtn').innerText = "ĐÃ NỘP BÀI!";
     loadLeaderboard();
   }
 
