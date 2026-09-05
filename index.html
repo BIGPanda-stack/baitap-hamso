@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Bài tập Hàm số bậc nhất</title>
   
-  <!-- KaTeX CDN -->
+  <!-- KaTeX CSS & JS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
 
-  <!-- Supabase CDN -->
+  <!-- Supabase JS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -124,7 +124,7 @@
       border-color: #dc2626;
     }
 
-    /* Khung nhập phụ */
+    /* Khung nhập phụ - Tất cả các câu đều có khung này khi chọn "Hàm số bậc nhất" */
     .sub-inputs {
       background: #f8fafc;
       border: 1px dashed #93c5fd;
@@ -157,9 +157,9 @@
       background: #fff;
     }
 
-    .inp-cond { width: 50px; }
-    .inp-a { width: 70px; }
-    .inp-b { width: 50px; }
+    .inp-cond { width: 55px; }
+    .inp-a { width: 75px; }
+    .inp-b { width: 55px; }
 
     .sub-inputs input:focus {
       border-color: #2563eb;
@@ -213,10 +213,11 @@
   <!-- BÀI TẬP -->
   <div class="card">
     <div class="guide-text">
-      📌 Chọn <b>[Hàm số bậc nhất]</b> (và điền tham số), hoặc chọn <b>[Không phải]</b>:
+      📌 Chọn <b>[Hàm số bậc nhất]</b> (và điền hệ số/điều kiện), hoặc chọn <b>[Không phải]</b>:
     </div>
 
     <div class="exercise-list">
+      
       <!-- Câu a -->
       <div class="math-row" data-id="a" data-is-linear="true" data-a="3" data-b="-2">
         <div class="row-header">
@@ -247,7 +248,7 @@
         </div>
       </div>
 
-      <!-- Câu c -->
+      <!-- Câu c (CÂU NÀY KHÔNG PHẢI, NHƯNG KHI BẤM "HÀM SỐ BẬC NHẤT" VẪN HIỆN Ô NHẬP ĐỂ KHÔNG BỊ "MẸO") -->
       <div class="math-row" data-id="c" data-is-linear="false">
         <div class="row-header">
           <div class="math-expr">c) <span class="math">y = 2x^2 + 3</span></div>
@@ -255,6 +256,10 @@
             <button class="btn-opt" onclick="selectType(this, 'yes')">Hàm số bậc nhất</button>
             <button class="btn-opt" onclick="selectType(this, 'no')">Không phải</button>
           </div>
+        </div>
+        <div class="sub-inputs" style="display:none;">
+          <div class="sub-item">Hệ số <span class="math">a =</span> <input type="text" class="inp-a"></div>
+          <div class="sub-item">Hệ số <span class="math">b =</span> <input type="text" class="inp-b"></div>
         </div>
       </div>
 
@@ -267,6 +272,10 @@
             <button class="btn-opt" onclick="selectType(this, 'no')">Không phải</button>
           </div>
         </div>
+        <div class="sub-inputs" style="display:none;">
+          <div class="sub-item">Hệ số <span class="math">a =</span> <input type="text" class="inp-a"></div>
+          <div class="sub-item">Hệ số <span class="math">b =</span> <input type="text" class="inp-b"></div>
+        </div>
       </div>
 
       <!-- Câu e -->
@@ -278,9 +287,13 @@
             <button class="btn-opt" onclick="selectType(this, 'no')">Không phải</button>
           </div>
         </div>
+        <div class="sub-inputs" style="display:none;">
+          <div class="sub-item">Hệ số <span class="math">a =</span> <input type="text" class="inp-a"></div>
+          <div class="sub-item">Hệ số <span class="math">b =</span> <input type="text" class="inp-b"></div>
+        </div>
       </div>
 
-      <!-- Câu f - Đã sửa lỗi hiển thị điều kiện m ≠ 1 và nhận cả chữ M hoa -->
+      <!-- Câu f - ĐÃ SỬA CHUẨN ĐIỀU KIỆN m ≠ [  ] -->
       <div class="math-row" data-id="f" data-is-linear="true" data-a="m-1" data-b="3">
         <div class="row-header">
           <div class="math-expr">f) <span class="math">y = (m - 1)x + 3</span></div>
@@ -349,16 +362,16 @@
     let sub = row.querySelector('.sub-inputs');
     if (choice === 'yes') {
       btn.classList.add('selected-yes');
-      if (sub) sub.style.display = 'flex';
+      if (sub) sub.style.display = 'flex'; // Chọn Hàm số bậc nhất -> LUÔN MỞ KHUNG NHẬP HỆ SỐ
       row.setAttribute('data-user-choice', 'yes');
     } else {
       btn.classList.add('selected-no');
-      if (sub) sub.style.display = 'none';
+      if (sub) sub.style.display = 'none'; // Chọn Không phải -> Ẩn khung nhập
       row.setAttribute('data-user-choice', 'no');
     }
   }
 
-  // Hàm làm sạch chuỗi nhập vào: Xóa khoảng trắng và đưa về chữ thường
+  // Làm sạch chuỗi: xóa dấu cách, chuyển thành chữ thường (M-1 -> m-1)
   function cleanVal(str) {
     if (!str) return '';
     return str.toString().toLowerCase().replace(/\s+/g, '');
@@ -386,17 +399,17 @@
         let inpA = row.querySelector('.inp-a');
         let inpB = row.querySelector('.inp-b');
 
-        // Kiểm tra hệ số a (Nhận cả 'm-1', 'M-1', 'm - 1', 'M - 1')
+        // Kiểm tra a (Chấp nhận m-1, M-1, m - 1, M - 1)
         if (inpA && cleanVal(inpA.value) !== cleanVal(row.getAttribute('data-a'))) {
           subCorrect = false;
         }
 
-        // Kiểm tra hệ số b
+        // Kiểm tra b
         if (inpB && cleanVal(inpB.value) !== cleanVal(row.getAttribute('data-b'))) {
           subCorrect = false;
         }
 
-        // Kiểm tra điều kiện m ≠ 1 (Ô trống chỉ cần nhập số 1)
+        // Kiểm tra điều kiện m ≠ 1 (Ô nhập chỉ gõ số 1)
         let inpCond = row.querySelector('.inp-cond');
         if (inpCond) {
           let val = cleanVal(inpCond.value);
@@ -405,14 +418,15 @@
 
         if (subCorrect) isCorrect = true;
       } else if (!isLinear && userChoice === 'no') {
+        // Nếu câu đó KHÔNG PHẢI hàm bậc nhất và học sinh bấm "Không phải" -> Đúng!
         isCorrect = true;
       }
 
       if (isCorrect) {
         correctCount++;
-        row.style.borderColor = '#16a34a'; // Xanh lá nếu đúng
+        row.style.borderColor = '#16a34a'; // Xanh lá
       } else {
-        row.style.borderColor = '#dc2626'; // Đỏ nếu sai
+        row.style.borderColor = '#dc2626'; // Đỏ
       }
     });
 
