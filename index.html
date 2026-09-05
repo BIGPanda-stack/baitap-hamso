@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Nhận Biết Hàm Số Bậc Nhất - Toán 8</title>
+  
+  <!-- KaTeX CSS & JS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  
+  <!-- Supabase JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --bg-color: #f3f4f6;
+      --card-bg: #ffffff;
+      --border-color: #cbd5e1;
+      --accent-blue: #eff6ff;
+    }
+
+    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    body { background-color: var(--bg-color); margin: 0; padding: 12px; color: #1f2937; }
+
+    .header-title {
+      text-align: center;
+      color: #065f46;
+      font-size: 22px;
+      font-weight: 800;
+      margin: 10px 0 15px 0;
+      text-transform: uppercase;
+    }
+
+    .main-grid {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      border: 1px solid var(--border-color);
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: bold;
+      color: #1e293b;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .user-info {
+      background: var(--accent-blue);
+      padding: 10px 14px;
+      border-radius: 10px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .user-info input {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    /* Bảng tương tác */
+    .table-container {
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+
+    table.matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border: 2px solid #64748b;
+    }
+
+    table.matrix-table th {
+      background: #fef08a;
+      color: #854d0e;
+      border: 1px solid #94a3b8;
+      padding: 10px 6px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    table.matrix-table td {
+      border: 1px solid #cbd5e1;
+      padding: 8px 6px;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 15px;
+    }
+
+    /* Ô Checkbox lựa chọn */
+    .check-btn {
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      accent-color: #2563eb;
+    }
+
+    /* Ô Nhập dữ liệu */
+    .math-input {
+      width: 90%;
+      max-width: 80px;
+      padding: 6px 4px;
+      text-align: center;
+      border: 1.5px solid #94a3b8;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .math-input:focus {
+      border-color: #4f46e5;
+      background: #f0fdf4;
+    }
+
+    .math-input:disabled {
+      background: #f1f5f9;
+      border-color: #e2e8f0;
+      cursor: not-allowed;
+    }
+
+    .math-input.correct {
+      border-color: #22c55e !important;
+      background: #dcfce7 !important;
+      color: #15803d;
+    }
+
+    .math-input.wrong {
+      border-color: #ef4444 !important;
+      background: #fee2e2 !important;
+      color: #b91c1c;
+    }
+
+    .cond-box {
+      font-size: 13px;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .btn-submit {
+      background: #22c55e;
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .btn-submit:hover { background: #16a34a; }
+
+    /* Bảng Xếp Hạng */
+    table.board-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      font-size: 14px;
+    }
+
+    table.board-table th, table.board-table td { border: 1px solid #e2e8f0; padding: 8px; text-align: center; }
+    table.board-table th { background: #e0e7ff; color: #3730a3; }
+
+    @media (max-width: 480px) {
+      body { padding: 6px; }
+      .card { padding: 10px; }
+      table.matrix-table th, table.matrix-table td { padding: 6px 2px; font-size: 13px; }
+      .math-input { width: 95%; max-width: 65px; font-size: 13px; padding: 4px 2px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header-title">📊 BÀI TẬP HÀM SỐ BẬC NHẤT</div>
+
+<div class="main-grid">
+  <!-- THÔNG TIN NHÓM -->
+  <div class="card">
+    <div class="user-info">
+      <label for="studentName"><b>Tên:</b></label>
+      <input type="text" id="studentName" placeholder="Nhập tên Nhóm / Học sinh...">
+    </div>
+  </div>
+
+  <!-- NỘI DUNG BÀI TẬP -->
+  <div class="card">
+    <div class="card-title">
+      📌 <b>Đề bài:</b> Trong các hàm số sau, hàm số nào biểu thị một hàm số bậc nhất? Hãy tích chọn và xác định các hệ số <span class="math">a, b</span> tương ứng:
+    </div>
+
+    <div class="table-container">
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th style="width: 32%;">Hàm số</th>
+            <th style="width: 22%;">Hàm số<br>bậc nhất?</th>
+            <th style="width: 23%;">Hệ số <span class="math">a</span></th>
+            <th style="width: 23%;">Hệ số <span class="math">b</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Câu a -->
+          <tr data-row="a" data-is-linear="true" data-a="3" data-b="-2">
+            <td><b>a)</b> <span class="math">y = 3x - 2</span></td>
+            <td><input type="checkbox" class="check-btn" onchange="toggleInputs(this)"></td>
+            <td><input type="text" class="math-input input-a" disabled placeholder="a = ?"></td>
+            <td><input type="text" class="math-input input-b" disabled placeholder="b = ?"></td>
+          </tr>
+
+          <!-- Câu b -->
+          <tr data-row="b" data-is-linear="true" data-a="-2" data-b="0">
+            <td><b>b)</b> <span class="math">y = -2x</span></td>
+            <td><input type="checkbox" class="check-btn" onchange="toggleInputs(this)"></td>
+            <td><input type="text" class="math-input input-a" disabled placeholder="a = ?"></td>
+            <td><input type="text" class="math-input input-b" disabled placeholder="b = ?"></td>
+          </tr>
+
+          <!-- Câu c -->
+          <tr data-row="c" data-is-linear="false">
+            <td><b>c)</b> <span class="math">y = 2x^2 + 3</span></td>
+            <td><input type="checkbox" class="check-btn" onchange="toggleInputs(this)"></td>
+            <td><input type="text" class="math-input input-a" disabled placeholder="--"></td>
+            <td><input type="text" class="math-input input-b" disabled placeholder="--"></td>
+          </tr>
+
+          <!-- Câu d -->
+          <tr data-row="d" data-is-linear="false">
+            <td><b>d)</b> <span class="math">y = 0x + 1</span></td>
+            <td><input type="checkbox" class="check-btn" onchange="toggleInputs(this)"></td>
+            <td><input type="text" class="math-input input-a" disabled placeholder="--"></td>
+            <td><input type="text" class="math-input input-b" disabled placeholder="--"></td>
+          </tr>
+
+          <!-- Câu e -->
+          <tr data-row="e" data-is-linear="false">
+            <td><b>e)</b> <span class="math">y = \frac{1}{2}</span></td>
+            <td><input type="checkbox" class="check-btn" onchange="toggleInputs(this)"></td>
+            <td><input type="text" class="math-input input-a" disabled placeholder="--"></td>
+            <td><input type="text" class="math-input input-b" disabled placeholder="--"></td>
+          </tr>
+
+          <!-- Câu f -->
+          <tr data-row="f" data-is-linear="true" data-a="m-1" data-b="3" data-m="1">
+            <td><b>f)</b> <span class="math">y = (m-1)x + 3</span></td>
+            <td>
+              <input type="checkbox" class="check-btn" onchange="toggleInputs(this)">
+              <div class="cond-box">
+                (nếu <span class="math">m \neq</span> <input type="text" class="math-input input-m" style="width:30px; padding:2px;" disabled>)
+              </div>
+            </td>
+            <td><input type="text" class="math-input input-a" disabled placeholder="a = ?"></td>
+            <td><input type="text" class="math-input input-b" disabled placeholder="b = ?"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <button class="btn-submit" id="submitBtn" onclick="checkAnswer()">CHECK / KIỂM TRA</button>
+    <div id="resultBox" style="margin-top:12px; padding:10px; border-radius:8px; text-align:center; display:none; font-weight:bold;"></div>
+  </div>
+
+  <!-- BẢNG XẾP HẠNG -->
+  <div class="card">
+    <div class="card-title">🏆 BẢNG XẾP HẠNG</div>
+    <table class="board-table">
+      <thead>
+        <tr>
+          <th>Hạng</th>
+          <th>Tên</th>
+          <th>Điểm</th>
+          <th>Thời gian</th>
+        </tr>
+      </thead>
+      <tbody id="boardBody">
+        <tr><td colspan="4">Đang tải...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  const SUPABASE_URL = "https://hyllhascudmrpfelnukc.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_oOicirSiyYu1f2oCYyYrzA_qcPCL7nX";
+  const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  window.onload = function() {
+    renderMath();
+    loadLeaderboard();
+  };
+
+  function renderMath() {
+    document.querySelectorAll('.math').forEach(el => {
+      katex.render(el.textContent, el, { throwOnError: false, displayMode: false });
+    });
+  }
+
+  // Bật / tắt ô nhập khi tích chọn
+  function toggleInputs(chk) {
+    let row = chk.closest('tr');
+    let inputs = row.querySelectorAll('.math-input');
+    inputs.forEach(inp => {
+      inp.disabled = !chk.checked;
+      if (!chk.checked) inp.value = '';
+    });
+  }
+
+  async function checkAnswer() {
+    let name = document.getElementById('studentName').value.trim();
+    if (!name) {
+      alert("Vui lòng nhập Tên trước khi nộp bài!");
+      return;
+    }
+
+    let rows = document.querySelectorAll('tr[data-row]');
+    let correctCount = 0;
+    let totalQuestions = 6; // 6 câu a -> f
+
+    rows.forEach(row => {
+      let isLinearTarget = row.getAttribute('data-is-linear') === 'true';
+      let chk = row.querySelector('.check-btn');
+      let isChecked = chk.checked;
+
+      let inputA = row.querySelector('.input-a');
+      let inputB = row.querySelector('.input-b');
+      let inputM = row.querySelector('.input-m');
+
+      let rowCorrect = false;
+
+      if (isLinearTarget) {
+        let targetA = row.getAttribute('data-a');
+        let targetB = row.getAttribute('data-b');
+
+        let userA = inputA.value.trim().replace(/\s+/g, '');
+        let userB = inputB.value.trim().replace(/\s+/g, '');
+
+        let isACorrect = (userA === targetA);
+        let isBCorrect = (userB === targetB);
+
+        // Đánh dấu xanh/đỏ ô A và B
+        markInput(inputA, isACorrect);
+        markInput(inputB, isBCorrect);
+
+        if (row.getAttribute('data-row') === 'f') {
+          let targetM = row.getAttribute('data-m');
+          let userM = inputM.value.trim();
+          let isMCorrect = (userM === targetM);
+          markInput(inputM, isMCorrect);
+          
+          if (isChecked && isACorrect && isBCorrect && isMCorrect) rowCorrect = true;
+        } else {
+          if (isChecked && isACorrect && isBCorrect) rowCorrect = true;
+        }
+
+      } else {
+        // Dành cho các câu không phải hàm số bậc nhất (c, d, e)
+        if (!isChecked) {
+          rowCorrect = true;
+        }
+      }
+
+      if (rowCorrect) correctCount++;
+    });
+
+    let score = `${correctCount}/${totalQuestions}`;
+    let now = new Date();
+    let timeStr = now.getHours().toString().padStart(2,'0') + ":" + 
+                  now.getMinutes().toString().padStart(2,'0') + ":" + 
+                  now.getSeconds().toString().padStart(2,'0');
+
+    let resBox = document.getElementById('resultBox');
+    resBox.style.display = "block";
+    resBox.style.background = correctCount === totalQuestions ? "#dcfce7" : "#fee2e2";
+    resBox.style.color = correctCount === totalQuestions ? "#166534" : "#991b1b";
+    resBox.innerHTML = `🎉 <b>${name}</b> hoàn thành: <b>${correctCount}/${totalQuestions}</b> câu đúng!`;
+
+    document.getElementById('submitBtn').disabled = true;
+    document.getElementById('submitBtn').innerText = "ĐANG LƯU KẾT QUẢ...";
+
+    await _supabase
+      .from('leaderboard')
+      .insert([{ name: name, score: score, time: timeStr, pts: correctCount }]);
+
+    document.getElementById('submitBtn').innerText = "ĐÃ NỘP BÀI!";
+    loadLeaderboard();
+  }
+
+  function markInput(inputEl, isCorrect) {
+    if (!inputEl) return;
+    if (isCorrect) {
+      inputEl.classList.remove('wrong');
+      inputEl.classList.add('correct');
+    } else {
+      inputEl.classList.remove('correct');
+      inputEl.classList.add('wrong');
+    }
+  }
+
+  async function loadLeaderboard() {
+    let { data, error } = await _supabase
+      .from('leaderboard')
+      .select('*')
+      .order('pts', { ascending: false })
+      .order('id', { ascending: true });
+
+    let tbody = document.getElementById('boardBody');
+    tbody.innerHTML = '';
+
+    if (error || !data || data.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4">Chưa có ai nộp bài.</td></tr>';
+      return;
+    }
+
+    data.forEach((row, index) => {
+      tbody.innerHTML += `<tr>
+        <td><b>${index + 1}</b></td>
+        <td><b>${row.name}</b></td>
+        <td><span style="color:#16a34a; font-weight:bold;">${row.score}</span></td>
+        <td>${row.time}</td>
+      </tr>`;
+    });
+  }
+</script>
+
+</body>
+</html>
