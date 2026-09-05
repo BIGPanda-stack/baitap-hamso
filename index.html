@@ -5,10 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Bài tập Hàm số bậc nhất</title>
   
-  <!-- KaTeX CSS & JS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-
   <!-- Supabase JS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -93,6 +89,7 @@
     .math-expr {
       font-size: 17px;
       font-weight: bold;
+      font-family: 'Times New Roman', Times, serif;
     }
 
     .btn-group {
@@ -124,25 +121,24 @@
       border-color: #dc2626;
     }
 
-    /* Khung nhập phụ - Tất cả các câu đều có khung này khi chọn "Hàm số bậc nhất" */
+    /* KHUNG NHẬP HỆ SỐ - Hiện ở TẤT CẢ các câu khi chọn "Hàm số bậc nhất" */
     .sub-inputs {
       background: #f8fafc;
       border: 1px dashed #93c5fd;
       border-radius: 10px;
       padding: 10px;
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px 12px;
-      align-items: center;
+      flex-direction: column;
+      gap: 8px;
       font-size: 15px;
       font-weight: 600;
       color: #1e3a8a;
     }
 
     .sub-item {
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 6px;
     }
 
     .sub-inputs input {
@@ -157,9 +153,9 @@
       background: #fff;
     }
 
-    .inp-cond { width: 55px; }
-    .inp-a { width: 75px; }
-    .inp-b { width: 55px; }
+    .inp-cond { width: 60px; }
+    .inp-a { width: 90px; }
+    .inp-b { width: 60px; }
 
     .sub-inputs input:focus {
       border-color: #2563eb;
@@ -221,95 +217,94 @@
       <!-- Câu a -->
       <div class="math-row" data-id="a" data-is-linear="true" data-a="3" data-b="-2">
         <div class="row-header">
-          <div class="math-expr">a) <span class="math">y = 3x - 2</span></div>
+          <div class="math-expr">a) <i>y</i> = 3<i>x</i> - 2</div>
           <div class="btn-group">
             <button class="btn-opt" onclick="selectType(this, 'yes')">Hàm số bậc nhất</button>
             <button class="btn-opt" onclick="selectType(this, 'no')">Không phải</button>
           </div>
         </div>
         <div class="sub-inputs" style="display:none;">
-          <div class="sub-item">Hệ số <span class="math">a =</span> <input type="text" class="inp-a"></div>
-          <div class="sub-item">Hệ số <span class="math">b =</span> <input type="text" class="inp-b"></div>
+          <div class="sub-item">Hệ số <i>a</i> = <input type="text" class="inp-a"></div>
+          <div class="sub-item">Hệ số <i>b</i> = <input type="text" class="inp-b"></div>
         </div>
       </div>
 
       <!-- Câu b -->
       <div class="math-row" data-id="b" data-is-linear="true" data-a="-2" data-b="0">
         <div class="row-header">
-          <div class="math-expr">b) <span class="math">y = -2x</span></div>
+          <div class="math-expr">b) <i>y</i> = -2<i>x</i></div>
           <div class="btn-group">
             <button class="btn-opt" onclick="selectType(this, 'yes')">Hàm số bậc nhất</button>
             <button class="btn-opt" onclick="selectType(this, 'no')">Không phải</button>
           </div>
         </div>
         <div class="sub-inputs" style="display:none;">
-          <div class="sub-item">Hệ số <span class="math">a =</span> <input type="text" class="inp-a"></div>
-          <div class="sub-item">Hệ số <span class="math">b =</span> <input type="text" class="inp-b"></div>
+          <div class="sub-item">Hệ số <i>a</i> = <input type="text" class="inp-a"></div>
+          <div class="sub-item">Hệ số <i>b</i> = <input type="text" class="inp-b"></div>
         </div>
       </div>
 
-      <!-- Câu c (CÂU NÀY KHÔNG PHẢI, NHƯNG KHI BẤM "HÀM SỐ BẬC NHẤT" VẪN HIỆN Ô NHẬP ĐỂ KHÔNG BỊ "MẸO") -->
+      <!-- Câu c (Không phải bậc nhất, nhưng chọn vẫn mở ô nhập để không bị lộ đáp án) -->
       <div class="math-row" data-id="c" data-is-linear="false">
         <div class="row-header">
-          <div class="math-expr">c) <span class="math">y = 2x^2 + 3</span></div>
+          <div class="math-expr">c) <i>y</i> = 2<i>x</i><sup>2</sup> + 3</div>
           <div class="btn-group">
             <button class="btn-opt" onclick="selectType(this, 'yes')">Hàm số bậc nhất</button>
             <button class="btn-opt" onclick="selectType(this, 'no')">Không phải</button>
           </div>
         </div>
         <div class="sub-inputs" style="display:none;">
-          <div class="sub-item">Hệ số <span class="math">a =</span> <input type="text" class="inp-a"></div>
-          <div class="sub-item">Hệ số <span class="math">b =</span> <input type="text" class="inp-b"></div>
+          <div class="sub-item">Hệ số <i>a</i> = <input type="text" class="inp-a"></div>
+          <div class="sub-item">Hệ số <i>b</i> = <input type="text" class="inp-b"></div>
         </div>
       </div>
 
       <!-- Câu d -->
       <div class="math-row" data-id="d" data-is-linear="false">
         <div class="row-header">
-          <div class="math-expr">d) <span class="math">y = 0x + 1</span></div>
+          <div class="math-expr">d) <i>y</i> = 0<i>x</i> + 1</div>
           <div class="btn-group">
             <button class="btn-opt" onclick="selectType(this, 'yes')">Hàm số bậc nhất</button>
             <button class="btn-opt" onclick="selectType(this, 'no')">Không phải</button>
           </div>
         </div>
         <div class="sub-inputs" style="display:none;">
-          <div class="sub-item">Hệ số <span class="math">a =</span> <input type="text" class="inp-a"></div>
-          <div class="sub-item">Hệ số <span class="math">b =</span> <input type="text" class="inp-b"></div>
+          <div class="sub-item">Hệ số <i>a</i> = <input type="text" class="inp-a"></div>
+          <div class="sub-item">Hệ số <i>b</i> = <input type="text" class="inp-b"></div>
         </div>
       </div>
 
       <!-- Câu e -->
       <div class="math-row" data-id="e" data-is-linear="false">
         <div class="row-header">
-          <div class="math-expr">e) <span class="math">y = \frac{1}{2}</span></div>
+          <div class="math-expr">e) <i>y</i> = 1/2</div>
           <div class="btn-group">
             <button class="btn-opt" onclick="selectType(this, 'yes')">Hàm số bậc nhất</button>
             <button class="btn-opt" onclick="selectType(this, 'no')">Không phải</button>
           </div>
         </div>
         <div class="sub-inputs" style="display:none;">
-          <div class="sub-item">Hệ số <span class="math">a =</span> <input type="text" class="inp-a"></div>
-          <div class="sub-item">Hệ số <span class="math">b =</span> <input type="text" class="inp-b"></div>
+          <div class="sub-item">Hệ số <i>a</i> = <input type="text" class="inp-a"></div>
+          <div class="sub-item">Hệ số <i>b</i> = <input type="text" class="inp-b"></div>
         </div>
       </div>
 
-      <!-- Câu f - ĐÃ SỬA CHUẨN ĐIỀU KIỆN m ≠ [  ] -->
+      <!-- Câu f: CỐ ĐỊNH DẤU KHÁC ( ≠ ) NGOÀI Ô NHẬP -->
       <div class="math-row" data-id="f" data-is-linear="true" data-a="m-1" data-b="3">
         <div class="row-header">
-          <div class="math-expr">f) <span class="math">y = (m - 1)x + 3</span></div>
+          <div class="math-expr">f) <i>y</i> = (<i>m</i> - 1)<i>x</i> + 3</div>
           <div class="btn-group">
             <button class="btn-opt" onclick="selectType(this, 'yes')">Hàm số bậc nhất</button>
             <button class="btn-opt" onclick="selectType(this, 'no')">Không phải</button>
           </div>
         </div>
         <div class="sub-inputs" style="display:none;">
-          <!-- Hiển thị chuẩn Toán học: Điều kiện m ≠ [ 1 ] -->
+          <!-- Dấu ≠ được đặt cố định bằng HTML HTML-entity &ne; -->
           <div class="sub-item">
-            Điều kiện: <span class="math">m \neq</span> 
-            <input type="text" class="inp-cond" placeholder="?" inputmode="numeric">
+            Điều kiện: <i>m</i> &ne; <input type="text" class="inp-cond" placeholder="?" inputmode="numeric">
           </div>
-          <div class="sub-item">Hệ số <span class="math">a =</span> <input type="text" class="inp-a"></div>
-          <div class="sub-item">Hệ số <span class="math">b =</span> <input type="text" class="inp-b"></div>
+          <div class="sub-item">Hệ số <i>a</i> = <input type="text" class="inp-a"></div>
+          <div class="sub-item">Hệ số <i>b</i> = <input type="text" class="inp-b"></div>
         </div>
       </div>
 
@@ -344,15 +339,8 @@
   const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   window.onload = function() {
-    renderMath();
     loadLeaderboard();
   };
-
-  function renderMath() {
-    document.querySelectorAll('.math').forEach(el => {
-      katex.render(el.textContent, el, { throwOnError: false, displayMode: false });
-    });
-  }
 
   function selectType(btn, choice) {
     let row = btn.closest('.math-row');
@@ -362,16 +350,15 @@
     let sub = row.querySelector('.sub-inputs');
     if (choice === 'yes') {
       btn.classList.add('selected-yes');
-      if (sub) sub.style.display = 'flex'; // Chọn Hàm số bậc nhất -> LUÔN MỞ KHUNG NHẬP HỆ SỐ
+      if (sub) sub.style.display = 'flex'; // Chọn Hàm số bậc nhất -> HIỆN KHUNG NHẬP
       row.setAttribute('data-user-choice', 'yes');
     } else {
       btn.classList.add('selected-no');
-      if (sub) sub.style.display = 'none'; // Chọn Không phải -> Ẩn khung nhập
+      if (sub) sub.style.display = 'none'; // Chọn Không phải -> ẨN KHUNG NHẬP
       row.setAttribute('data-user-choice', 'no');
     }
   }
 
-  // Làm sạch chuỗi: xóa dấu cách, chuyển thành chữ thường (M-1 -> m-1)
   function cleanVal(str) {
     if (!str) return '';
     return str.toString().toLowerCase().replace(/\s+/g, '');
@@ -399,17 +386,17 @@
         let inpA = row.querySelector('.inp-a');
         let inpB = row.querySelector('.inp-b');
 
-        // Kiểm tra a (Chấp nhận m-1, M-1, m - 1, M - 1)
+        // Kiểm tra hệ số a (m-1, M-1, m - 1 đều đúng)
         if (inpA && cleanVal(inpA.value) !== cleanVal(row.getAttribute('data-a'))) {
           subCorrect = false;
         }
 
-        // Kiểm tra b
+        // Kiểm tra hệ số b (câu f: b = 3)
         if (inpB && cleanVal(inpB.value) !== cleanVal(row.getAttribute('data-b'))) {
           subCorrect = false;
         }
 
-        // Kiểm tra điều kiện m ≠ 1 (Ô nhập chỉ gõ số 1)
+        // Kiểm tra điều kiện (chỉ cần học sinh nhập đúng số 1)
         let inpCond = row.querySelector('.inp-cond');
         if (inpCond) {
           let val = cleanVal(inpCond.value);
@@ -418,15 +405,15 @@
 
         if (subCorrect) isCorrect = true;
       } else if (!isLinear && userChoice === 'no') {
-        // Nếu câu đó KHÔNG PHẢI hàm bậc nhất và học sinh bấm "Không phải" -> Đúng!
+        // Chọn "Không phải" đúng cho câu không phải hàm bậc nhất
         isCorrect = true;
       }
 
       if (isCorrect) {
         correctCount++;
-        row.style.borderColor = '#16a34a'; // Xanh lá
+        row.style.borderColor = '#16a34a';
       } else {
-        row.style.borderColor = '#dc2626'; // Đỏ
+        row.style.borderColor = '#dc2626';
       }
     });
 
