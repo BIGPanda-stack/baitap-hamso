@@ -3,37 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Nhận Biết Hàm Số Bậc Nhất</title>
+  <title>Bài tập Hàm số bậc nhất</title>
   
   <!-- KaTeX CSS & JS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-  
+
   <!-- Supabase JS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     :root {
-      --primary: #4f46e5;
+      --primary: #2563eb;
       --bg-color: #f8fafc;
       --card-bg: #ffffff;
-      --border-color: #e2e8f0;
+      --border-color: #cbd5e1;
     }
 
     * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
     body { background-color: var(--bg-color); margin: 0; padding: 12px; color: #1e293b; }
 
-    .header-title {
-      text-align: center;
-      color: #0f766e;
-      font-size: 20px;
-      font-weight: 800;
-      margin: 10px 0 15px 0;
-      text-transform: uppercase;
-    }
-
     .main-container {
-      max-width: 800px;
+      max-width: 750px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -44,18 +35,18 @@
       background: var(--card-bg);
       border-radius: 16px;
       padding: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
       border: 1px solid var(--border-color);
     }
 
     .user-info {
-      background: #f0fdf4;
+      background: #eff6ff;
       padding: 10px 14px;
       border-radius: 10px;
       display: flex;
       gap: 10px;
       align-items: center;
-      border: 1px solid #bbf7d0;
+      border: 1px solid #bfdbfe;
     }
 
     .user-info input {
@@ -67,112 +58,101 @@
       font-size: 14px;
     }
 
-    /* Danh sách câu hỏi dạng Thẻ Card */
-    .question-list {
+    .guide-text {
+      font-size: 14px;
+      font-weight: bold;
+      color: #1e40af;
+      margin-bottom: 12px;
+    }
+
+    .exercise-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      margin-top: 10px;
+      gap: 10px;
     }
 
-    .item-card {
-      background: #ffffff;
-      border: 2px solid #cbd5e1;
+    .math-row {
+      background: #fff;
+      border: 2px solid #60a5fa;
       border-radius: 12px;
-      padding: 12px 14px;
-      transition: all 0.2s;
-    }
-
-    .item-card.active {
-      border-color: #6366f1;
-      box-shadow: 0 2px 8px rgba(99, 102, 241, 0.15);
-    }
-
-    .item-header {
+      padding: 12px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: 8px;
     }
 
-    .item-math {
-      font-size: 16px;
+    .row-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .math-expr {
+      font-size: 17px;
       font-weight: bold;
     }
 
-    /* Nút chọn Có / Không */
     .btn-group {
       display: flex;
       gap: 6px;
     }
 
-    .type-btn {
+    .btn-opt {
       padding: 6px 12px;
-      border: 1.5px solid #cbd5e1;
-      background: #f8fafc;
       border-radius: 20px;
+      border: 1px solid #cbd5e1;
+      background: #f1f5f9;
+      color: #475569;
       font-size: 13px;
-      font-weight: 600;
+      font-weight: bold;
       cursor: pointer;
-      user-select: none;
       transition: all 0.2s;
     }
 
-    .type-btn.selected-yes {
-      background: #22c55e;
+    .btn-opt.selected-yes {
+      background: #16a34a;
       color: white;
       border-color: #16a34a;
     }
 
-    .type-btn.selected-no {
-      background: #ef4444;
+    .btn-opt.selected-no {
+      background: #dc2626;
       color: white;
       border-color: #dc2626;
     }
 
-    /* Khu vực điền hệ số a, b */
-    .coeff-area {
-      display: none;
-      background: #f1f5f9;
-      padding: 10px;
-      border-radius: 8px;
+    /* Khung nhập a, b và điều kiện */
+    .sub-inputs {
+      background: #f8fafc;
+      border-top: 1px dashed #cbd5e1;
+      padding-top: 8px;
+      margin-top: 4px;
+      display: flex;
+      flex-wrap: wrap;
       gap: 12px;
       align-items: center;
-      justify-content: flex-start;
-      margin-top: 8px;
-      flex-wrap: wrap;
-    }
-
-    .coeff-group {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .math-input {
-      width: 65px;
-      padding: 6px 4px;
-      text-align: center;
-      border: 1.5px solid #94a3b8;
-      border-radius: 6px;
       font-size: 14px;
-      font-weight: 600;
+    }
+
+    .sub-inputs input {
+      width: 65px;
+      padding: 5px 8px;
+      text-align: center;
+      border: 1px solid #94a3b8;
+      border-radius: 6px;
       outline: none;
-      background: white;
+      font-weight: bold;
     }
 
-    .math-input.correct {
-      border-color: #22c55e !important;
-      background: #dcfce7 !important;
-      color: #15803d;
-    }
-
-    .math-input.wrong {
-      border-color: #ef4444 !important;
-      background: #fee2e2 !important;
-      color: #b91c1c;
+    .sym-btn {
+      background: #e2e8f0;
+      border: 1px solid #94a3b8;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 13px;
     }
 
     .btn-submit {
@@ -201,22 +181,13 @@
     }
 
     table.board-table th, table.board-table td { border: 1px solid #e2e8f0; padding: 8px; text-align: center; }
-    table.board-table th { background: #e0e7ff; color: #3730a3; }
-
-    @media (max-width: 480px) {
-      body { padding: 8px; }
-      .card { padding: 12px; }
-      .type-btn { padding: 5px 10px; font-size: 12px; }
-      .math-input { width: 55px; font-size: 13px; }
-    }
+    table.board-table th { background: #eff6ff; color: #1e40af; }
   </style>
 </head>
 <body>
 
-<div class="header-title">📝 BÀI TẬP HÀM SỐ BẬC NHẤT</div>
-
 <div class="main-container">
-  <!-- THÔNG TIN NHÓM -->
+  <!-- NHẬP TÊN -->
   <div class="card">
     <div class="user-info">
       <label for="studentName"><b>Tên Nhóm / HS:</b></label>
@@ -224,103 +195,96 @@
     </div>
   </div>
 
-  <!-- BÀI TẬP DẠNG THẺ -->
+  <!-- NỘI DUNG BÀI TẬP -->
   <div class="card">
-    <div style="font-weight:bold; font-size:14px; margin-bottom:8px; color:#334155;">
-      📌 Chọn <b>[Có]</b> nếu là Hàm số bậc nhất (và xác định $a, b$), chọn <b>[Không]</b> nếu không phải:
+    <div class="guide-text">
+      📌 Chọn <b>[Hàm số bậc nhất]</b> (và xác định $a, b$), chọn <b>[Không phải]</b> nếu không phải:
     </div>
 
-    <div class="question-list">
+    <div class="exercise-list">
       <!-- Câu a -->
-      <div class="item-card" data-id="a" data-is-linear="true" data-a="3" data-b="-2">
-        <div class="item-header">
-          <div class="item-math">a) <span class="math">y = 3x - 2</span></div>
+      <div class="math-row" data-id="a" data-is-linear="true" data-a="3" data-b="-2">
+        <div class="row-header">
+          <div class="math-expr">a) <span class="math">y = 3x - 2</span></div>
           <div class="btn-group">
-            <button class="type-btn" onclick="selectType(this, true)">Hàm số bậc nhất</button>
-            <button class="type-btn" onclick="selectType(this, false)">Không phải</button>
+            <button class="btn-opt" onclick="selectType(this, 'yes')">Hàm số bậc nhất</button>
+            <button class="btn-opt" onclick="selectType(this, 'no')">Không phải</button>
           </div>
         </div>
-        <div class="coeff-area">
-          <div class="coeff-group">Hệ số <span class="math">a =</span> <input type="text" class="math-input input-a"></div>
-          <div class="coeff-group">Hệ số <span class="math">b =</span> <input type="text" class="math-input input-b"></div>
+        <div class="sub-inputs" style="display:none;">
+          <span>Hệ số <span class="math">a =</span> <input type="text" class="inp-a"></span>
+          <span>Hệ số <span class="math">b =</span> <input type="text" class="inp-b"></span>
         </div>
       </div>
 
       <!-- Câu b -->
-      <div class="item-card" data-id="b" data-is-linear="true" data-a="-2" data-b="0">
-        <div class="item-header">
-          <div class="item-math">b) <span class="math">y = -2x</span></div>
+      <div class="math-row" data-id="b" data-is-linear="true" data-a="-2" data-b="0">
+        <div class="row-header">
+          <div class="math-expr">b) <span class="math">y = -2x</span></div>
           <div class="btn-group">
-            <button class="type-btn" onclick="selectType(this, true)">Hàm số bậc nhất</button>
-            <button class="type-btn" onclick="selectType(this, false)">Không phải</button>
+            <button class="btn-opt" onclick="selectType(this, 'yes')">Hàm số bậc nhất</button>
+            <button class="btn-opt" onclick="selectType(this, 'no')">Không phải</button>
           </div>
         </div>
-        <div class="coeff-area">
-          <div class="coeff-group">Hệ số <span class="math">a =</span> <input type="text" class="math-input input-a"></div>
-          <div class="coeff-group">Hệ số <span class="math">b =</span> <input type="text" class="math-input input-b"></div>
+        <div class="sub-inputs" style="display:none;">
+          <span>Hệ số <span class="math">a =</span> <input type="text" class="inp-a"></span>
+          <span>Hệ số <span class="math">b =</span> <input type="text" class="inp-b"></span>
         </div>
       </div>
 
       <!-- Câu c -->
-      <div class="item-card" data-id="c" data-is-linear="false">
-        <div class="item-header">
-          <div class="item-math">c) <span class="math">y = 2x^2 + 3</span></div>
+      <div class="math-row" data-id="c" data-is-linear="false">
+        <div class="row-header">
+          <div class="math-expr">c) <span class="math">y = 2x^2 + 3</span></div>
           <div class="btn-group">
-            <button class="type-btn" onclick="selectType(this, true)">Hàm số bậc nhất</button>
-            <button class="type-btn" onclick="selectType(this, false)">Không phải</button>
+            <button class="btn-opt" onclick="selectType(this, 'yes')">Hàm số bậc nhất</button>
+            <button class="btn-opt" onclick="selectType(this, 'no')">Không phải</button>
           </div>
-        </div>
-        <div class="coeff-area">
-          <div class="coeff-group">Hệ số <span class="math">a =</span> <input type="text" class="math-input input-a"></div>
-          <div class="coeff-group">Hệ số <span class="math">b =</span> <input type="text" class="math-input input-b"></div>
         </div>
       </div>
 
       <!-- Câu d -->
-      <div class="item-card" data-id="d" data-is-linear="false">
-        <div class="item-header">
-          <div class="item-math">d) <span class="math">y = 0x + 1</span></div>
+      <div class="math-row" data-id="d" data-is-linear="false">
+        <div class="row-header">
+          <div class="math-expr">d) <span class="math">y = 0x + 1</span></div>
           <div class="btn-group">
-            <button class="type-btn" onclick="selectType(this, true)">Hàm số bậc nhất</button>
-            <button class="type-btn" onclick="selectType(this, false)">Không phải</button>
+            <button class="btn-opt" onclick="selectType(this, 'yes')">Hàm số bậc nhất</button>
+            <button class="btn-opt" onclick="selectType(this, 'no')">Không phải</button>
           </div>
-        </div>
-        <div class="coeff-area">
-          <div class="coeff-group">Hệ số <span class="math">a =</span> <input type="text" class="math-input input-a"></div>
-          <div class="coeff-group">Hệ số <span class="math">b =</span> <input type="text" class="math-input input-b"></div>
         </div>
       </div>
 
       <!-- Câu e -->
-      <div class="item-card" data-id="e" data-is-linear="false">
-        <div class="item-header">
-          <div class="item-math">e) <span class="math">y = \frac{1}{2}</span></div>
+      <div class="math-row" data-id="e" data-is-linear="false">
+        <div class="row-header">
+          <div class="math-expr">e) <span class="math">y = \frac{1}{2}</span></div>
           <div class="btn-group">
-            <button class="type-btn" onclick="selectType(this, true)">Hàm số bậc nhất</button>
-            <button class="type-btn" onclick="selectType(this, false)">Không phải</button>
+            <button class="btn-opt" onclick="selectType(this, 'yes')">Hàm số bậc nhất</button>
+            <button class="btn-opt" onclick="selectType(this, 'no')">Không phải</button>
           </div>
-        </div>
-        <div class="coeff-area">
-          <div class="coeff-group">Hệ số <span class="math">a =</span> <input type="text" class="math-input input-a"></div>
-          <div class="coeff-group">Hệ số <span class="math">b =</span> <input type="text" class="math-input input-b"></div>
         </div>
       </div>
 
-      <!-- Câu f -->
-      <div class="item-card" data-id="f" data-is-linear="true" data-a="m-1" data-b="3" data-m="1">
-        <div class="item-header">
-          <div class="item-math">f) <span class="math">y = (m-1)x + 3</span></div>
+      <!-- Câu f - Đã sửa lỗi hiển thị m ≠ 1 -->
+      <div class="math-row" data-id="f" data-is-linear="true" data-cond="m!=1|m\neq1|≠1" data-a="m-1" data-b="3">
+        <div class="row-header">
+          <div class="math-expr">f) <span class="math">y = (m - 1)x + 3</span></div>
           <div class="btn-group">
-            <button class="type-btn" onclick="selectType(this, true)">Hàm số bậc nhất</button>
-            <button class="type-btn" onclick="selectType(this, false)">Không phải</button>
+            <button class="btn-opt" onclick="selectType(this, 'yes')">Hàm số bậc nhất</button>
+            <button class="btn-opt" onclick="selectType(this, 'no')">Không phải</button>
           </div>
         </div>
-        <div class="coeff-area">
-          <div class="coeff-group">Điều kiện: <span class="math">m \neq</span> <input type="text" class="math-input input-m" style="width:40px;"></div>
-          <div class="coeff-group">Hệ số <span class="math">a =</span> <input type="text" class="math-input input-a"></div>
-          <div class="coeff-group">Hệ số <span class="math">b =</span> <input type="text" class="math-input input-b"></div>
+        <div class="sub-inputs" style="display:none;">
+          <!-- Khung hiển thị m ≠ 1 chuẩn KaTeX -->
+          <span>Điều kiện: <span class="math">m \neq</span> 
+            <input type="text" class="inp-cond" placeholder="1" style="width:45px;">
+            <button type="button" class="sym-btn" onclick="insertSymbol(this, '≠')">≠</button>
+          </span>
+          <span>Hệ số <span class="math">a =</span> <input type="text" class="inp-a"></span>
+          <span>Hệ số <span class="math">b =</span> <input type="text" class="inp-b"></span>
         </div>
       </div>
+
     </div>
 
     <button class="btn-submit" id="submitBtn" onclick="checkAnswer()">CHECK / KIỂM TRA BÀI LÀM</button>
@@ -351,8 +315,6 @@
   const SUPABASE_KEY = "sb_publishable_oOicirSiyYu1f2oCYyYrzA_qcPCL7nX";
   const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  let userChoices = {}; // Lưu lựa chọn Có/Không của học sinh
-
   window.onload = function() {
     renderMath();
     loadLeaderboard();
@@ -364,28 +326,27 @@
     });
   }
 
-  // Xử lý khi bấm nút chọn Hàm số bậc nhất [Có] hay [Không]
-  function selectType(btn, isYes) {
-    let card = btn.closest('.item-card');
-    let qId = card.getAttribute('data-id');
-    let buttons = card.querySelectorAll('.type-btn');
-    let coeffArea = card.querySelector('.coeff-area');
+  function selectType(btn, choice) {
+    let row = btn.closest('.math-row');
+    let buttons = row.querySelectorAll('.btn-opt');
+    buttons.forEach(b => b.classList.remove('selected-yes', 'selected-no'));
 
-    buttons.forEach(b => {
-      b.classList.remove('selected-yes', 'selected-no');
-    });
-
-    if (isYes) {
+    let sub = row.querySelector('.sub-inputs');
+    if (choice === 'yes') {
       btn.classList.add('selected-yes');
-      coeffArea.style.display = 'flex'; // Mở khu vực điền a, b
-      userChoices[qId] = true;
+      if (sub) sub.style.display = 'flex';
+      row.setAttribute('data-user-choice', 'yes');
     } else {
       btn.classList.add('selected-no');
-      coeffArea.style.display = 'none'; // Ẩn khu vực điền a, b
-      userChoices[qId] = false;
+      if (sub) sub.style.display = 'none';
+      row.setAttribute('data-user-choice', 'no');
     }
+  }
 
-    card.classList.add('active');
+  function insertSymbol(btn, sym) {
+    let inp = btn.previousElementSibling;
+    inp.value += sym;
+    inp.focus();
   }
 
   async function checkAnswer() {
@@ -395,60 +356,43 @@
       return;
     }
 
-    let cards = document.querySelectorAll('.item-card');
+    let rows = document.querySelectorAll('.math-row');
     let correctCount = 0;
-    let totalQuestions = cards.length;
+    let totalQuestions = rows.length;
 
-    cards.forEach(card => {
-      let qId = card.getAttribute('data-id');
-      let isLinearTarget = card.getAttribute('data-is-linear') === 'true';
-      let userChoice = userChoices[qId];
+    rows.forEach(row => {
+      let isLinear = row.getAttribute('data-is-linear') === 'true';
+      let userChoice = row.getAttribute('data-user-choice');
 
-      let inputA = card.querySelector('.input-a');
-      let inputB = card.querySelector('.input-b');
-      let inputM = card.querySelector('.input-m');
+      let isCorrect = false;
 
-      let isCardCorrect = false;
+      if (isLinear && userChoice === 'yes') {
+        let subCorrect = true;
+        
+        // Kiểm tra a, b
+        let inpA = row.querySelector('.inp-a');
+        let inpB = row.querySelector('.inp-b');
+        if (inpA && inpA.value.trim().replace(/\s+/g,'') !== row.getAttribute('data-a')) subCorrect = false;
+        if (inpB && inpB.value.trim().replace(/\s+/g,'') !== row.getAttribute('data-b')) subCorrect = false;
 
-      // Trường hợp 1: Hàm đúng là Hàm số bậc nhất
-      if (isLinearTarget) {
-        if (userChoice === true) {
-          let targetA = card.getAttribute('data-a');
-          let targetB = card.getAttribute('data-b');
-
-          let userA = inputA ? inputA.value.trim().replace(/\s+/g, '') : '';
-          let userB = inputB ? inputB.value.trim().replace(/\s+/g, '') : '';
-
-          let isACorrect = (userA === targetA);
-          let isBCorrect = (userB === targetB);
-
-          markInput(inputA, isACorrect);
-          markInput(inputB, isBCorrect);
-
-          if (qId === 'f') {
-            let targetM = card.getAttribute('data-m');
-            let userM = inputM ? inputM.value.trim() : '';
-            let isMCorrect = (userM === targetM);
-            markInput(inputM, isMCorrect);
-
-            if (isACorrect && isBCorrect && isMCorrect) isCardCorrect = true;
-          } else {
-            if (isACorrect && isBCorrect) isCardCorrect = true;
-          }
+        // Kiểm tra điều kiện m ≠ 1 (nếu có)
+        let inpCond = row.querySelector('.inp-cond');
+        if (inpCond) {
+          let val = inpCond.value.trim().replace(/\s+/g,'');
+          // Chấp nhận gõ '1', '≠1', '!=1'
+          if (val !== '1' && val !== '≠1' && val !== '!=1') subCorrect = false;
         }
-      } 
-      // Trường hợp 2: Hàm KHÔNG PHẢI là hàm số bậc nhất
-      else {
-        if (userChoice === false) {
-          isCardCorrect = true;
-        }
+
+        if (subCorrect) isCorrect = true;
+      } else if (!isLinear && userChoice === 'no') {
+        isCorrect = true;
       }
 
-      if (isCardCorrect) {
+      if (isCorrect) {
         correctCount++;
-        card.style.borderColor = "#22c55e";
+        row.style.borderColor = '#16a34a';
       } else {
-        card.style.borderColor = "#ef4444";
+        row.style.borderColor = '#dc2626';
       }
     });
 
@@ -475,17 +419,6 @@
     loadLeaderboard();
   }
 
-  function markInput(inputEl, isCorrect) {
-    if (!inputEl) return;
-    if (isCorrect) {
-      inputEl.classList.remove('wrong');
-      inputEl.classList.add('correct');
-    } else {
-      inputEl.classList.remove('correct');
-      inputEl.classList.add('wrong');
-    }
-  }
-
   async function loadLeaderboard() {
     let { data, error } = await _supabase
       .from('leaderboard')
@@ -505,7 +438,7 @@
       tbody.innerHTML += `<tr>
         <td><b>${index + 1}</b></td>
         <td><b>${row.name}</b></td>
-        <td><span style="color:#16a34a; font-weight:bold;">${row.score}</span></td>
+        <td><span style="color:#2563eb; font-weight:bold;">${row.score}</span></td>
         <td>${row.time}</td>
       </tr>`;
     });
